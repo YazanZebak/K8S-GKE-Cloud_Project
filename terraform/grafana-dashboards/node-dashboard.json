@@ -1,0 +1,45 @@
+{
+    "dashboard": {
+        "title": "Node Resource Usage",
+        "panels": [
+            {
+                "type": "graph",
+                "title": "Node CPU Usage",
+                "targets": [
+                    {
+                        "expr": "100 - (avg(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) by (instance) * 100)",
+                        "legendFormat": "{{instance}}",
+                        "refId": "A"
+                    }
+                ]
+            },
+            {
+                "type": "graph",
+                "title": "Node Memory Usage",
+                "targets": [
+                    {
+                        "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
+                        "legendFormat": "{{instance}}",
+                        "refId": "B"
+                    }
+                ]
+            },
+            {
+                "type": "graph",
+                "title": "Node Network Traffic",
+                "targets": [
+                    {
+                        "expr": "sum(rate(node_network_receive_bytes_total[5m])) by (instance)",
+                        "legendFormat": "{{instance}} - Receive",
+                        "refId": "C"
+                    },
+                    {
+                        "expr": "sum(rate(node_network_transmit_bytes_total[5m])) by (instance)",
+                        "legendFormat": "{{instance}} - Transmit",
+                        "refId": "D"
+                    }
+                ]
+            }
+        ]
+    }
+}
